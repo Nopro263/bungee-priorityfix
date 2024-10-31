@@ -1,5 +1,6 @@
 package at.nopro.testproxy;
 
+import net.md_5.bungee.api.AbstractReconnectHandler;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.ReconnectHandler;
 import net.md_5.bungee.api.ServerPing;
@@ -75,6 +76,10 @@ public class CustomReconnect implements ReconnectHandler {
                     }
                 }
             }
+        }
+
+        if(AbstractReconnectHandler.getForcedHost(proxiedPlayer.getPendingConnection()) != null) {
+            return AbstractReconnectHandler.getForcedHost(proxiedPlayer.getPendingConnection());
         }
 
         List<String> p = proxiedPlayer.getPendingConnection().getListener().getServerPriority();
