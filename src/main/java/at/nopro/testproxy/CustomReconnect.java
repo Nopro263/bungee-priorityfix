@@ -63,7 +63,7 @@ public class CustomReconnect implements ReconnectHandler {
     @Override
     public ServerInfo getServer(ProxiedPlayer proxiedPlayer) {
         // Use saved data, if possible
-        if(this.handler != null) {
+        if(this.handler != null && !proxiedPlayer.getPendingConnection().getListener().isForceDefault()) {
             ServerInfo info = this.handler.getServer(proxiedPlayer);
             if(info != null) {
                 ServerInfoEx serverInfoEx = serverInfoExMap.get(info.getName());
@@ -100,17 +100,17 @@ public class CustomReconnect implements ReconnectHandler {
 
     @Override
     public void setServer(ProxiedPlayer proxiedPlayer) {
-
+        this.handler.setServer(proxiedPlayer);
     }
 
     @Override
     public void save() {
-
+        this.handler.save();
     }
 
     @Override
     public void close() {
-
+        this.handler.close();
     }
 
     private static class ServerInfoEx {
