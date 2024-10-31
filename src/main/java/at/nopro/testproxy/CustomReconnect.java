@@ -34,8 +34,14 @@ public class CustomReconnect implements ReconnectHandler {
                     serverInfo.ping((serverPing, throwable) -> {
                         if(serverPing != null) {
                             serverInfoExMap.put(server, new ServerInfoEx(serverInfo, serverPing));
+                            if(!serverPriority.contains(server)) {
+                                ProxyServer.getInstance().getLogger().info("Server '" + server + "' came online with Protocol version: " + serverPing.getVersion().getName());
+                            }
                         } else {
                             sp.remove(server);
+                            if(serverPriority.contains(server)) {
+                                ProxyServer.getInstance().getLogger().warning("Server '" + server + "' went offline");
+                            }
                         }
                         int newVar = count.addAndGet(-1);
                         if(newVar == 0) {
