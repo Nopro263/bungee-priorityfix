@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class CustomReconnect implements ReconnectHandler {
@@ -24,7 +23,7 @@ public class CustomReconnect implements ReconnectHandler {
     private static final Map<String, ServerInfoEx> serverInfoExMap = new HashMap<>();
     private static List<String> serverPriority = new ArrayList<>();
 
-    private ReconnectHandler handler;
+    private final ReconnectHandler handler;
 
     public static void populateCache() {
         List<String> sp = new ArrayList<>();
