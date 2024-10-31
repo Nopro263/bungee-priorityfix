@@ -23,6 +23,8 @@ public class CustomReconnect implements ReconnectHandler {
     private static final Map<String, ServerInfoEx> serverInfoExMap = new HashMap<>();
     private static List<String> serverPriority = new ArrayList<>();
 
+    private ReconnectHandler handler;
+
     public static void populateCache() {
         List<String> sp = new ArrayList<>();
         AtomicInteger count = new AtomicInteger();
@@ -54,8 +56,27 @@ public class CustomReconnect implements ReconnectHandler {
         }
     }
 
+    public CustomReconnect(ReconnectHandler originalHandler) {
+        this.handler = originalHandler;
+    }
+
     @Override
     public ServerInfo getServer(ProxiedPlayer proxiedPlayer) {
+        // Use saved data, if possible
+        if(this.handler != null) {
+            ServerInfo info = this.handler.getServer(proxiedPlayer);
+            if(info != null) {
+                ServerInfoEx serverInfoEx = serverInfoExMap.get(info.getName());
+                if(serverInfoEx == null) {
+                    ProxyServer.getInstance().getLogger().severe("Server " + info.getName() + "has no info");
+                } else {
+                    if(serverInfoEx.getServerPing().getVersion().getProtocol() == proxiedPlayer.getPendingConnection().getVersion()) {
+                        return info;
+                    }
+                }
+            }
+        }
+
         List<String> p = proxiedPlayer.getPendingConnection().getListener().getServerPriority();
 
         List<String> sp = serverPriority.stream().filter(p::contains).collect(Collectors.toList());

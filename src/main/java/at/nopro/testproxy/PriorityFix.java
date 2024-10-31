@@ -11,7 +11,7 @@ public final class PriorityFix extends Plugin {
     public void onEnable() {
         // Plugin startup logic
         CustomReconnect.populateCache();
-        ProxyServer.getInstance().setReconnectHandler(new CustomReconnect());
+        ProxyServer.getInstance().setReconnectHandler(new CustomReconnect(ProxyServer.getInstance().getReconnectHandler()));
 
         ProxyServer.getInstance().getScheduler().schedule(this, CustomReconnect::populateCache, 10, 10, TimeUnit.SECONDS);
     }
