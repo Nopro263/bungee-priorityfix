@@ -2,11 +2,10 @@ package at.nopro.testproxy;
 
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.api.scheduler.TaskScheduler;
 
 import java.util.concurrent.TimeUnit;
 
-public final class Testproxy extends Plugin {
+public final class PriorityFix extends Plugin {
 
     @Override
     public void onEnable() {

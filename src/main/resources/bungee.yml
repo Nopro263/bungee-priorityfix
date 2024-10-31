@@ -1,3 +1,4 @@
-name: testproxy
-version: '1.0-SNAPSHOT'
-main: at.nopro.testproxy.Testproxy
+name: PriorityFix
+version: '1.0'
+main: at.nopro.testproxy.PriorityFix
+author: Nopro263
